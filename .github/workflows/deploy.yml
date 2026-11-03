@@ -1,0 +1,66 @@
+name: BSI Grundschutz Scraper & Pages Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    # Jeden Montag um 03:00 UTC automatische Prüfung auf Aktualisierungen
+    - cron: '0 3 * * 1'
+  workflow_dispatch: # Ermöglicht manuellen Start per Klick im GitHub Webinterface
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  scrape-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      - name: Fragen vom BSI scrapen
+        run: |
+          python scraper.py
+
+      - name: Aktualisierte Fragen ins Git-Repository committen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/questions.json
+          if ! git diff --quiet || ! git diff --staged --quiet; then
+            git commit -m "chore(data): automatische Aktualisierung des BSI-Fragenkatalogs [skip ci]"
+            git push
+          else
+            echo "Keine Änderungen an den Fragen festgestellt."
+          fi
+
+      - name: GitHub Pages konfigurieren
+        uses: actions/configure-pages@v4
+
+      - name: Statische Webseiten-Artefakte hochladen
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deployment auf GitHub Pages ausführen
+        id: deployment
+        uses: actions/deploy-pages@v4

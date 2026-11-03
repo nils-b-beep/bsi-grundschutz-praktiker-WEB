@@ -6,6 +6,25 @@ Prüfungstrainer für die [BSI IT-Grundschutz Praktiker](https://www.bsi.bund.de
 
 ![Demo](docs/demo.gif)
 
+
+## 🌐 Web-Version (Ohne Installation / GitHub Pages)
+
+Für Endanwender und Umgebungen mit restriktiven Sicherheitsrichtlinien (z. B. ASR-Regeln gegen `.exe`-Dateien) steht dieser Prüfungstrainer als reine **Web-App** zur Verfügung:
+
+👉 **[Prüfungstrainer im Browser starten](https://nils-b-beep.github.io/bsi-grundschutz-praktiker-WEB/)**
+
+* 🛡️ Keine Installation von Python, Linux oder Executables notwendig.
+* 🔄 Wöchentlich automatische Aktualisierung der Fragen direkt von der BSI-Webseite via GitHub Actions.
+* 💾 Lokale Speicherung des Lernfortschritts im Browser (`localStorage`).
+
+### ⚖️ Rechtlicher Hinweis & Disclaimer
+
+* **Inoffizielles Lernwerkzeug:** Dieses Projekt ist ein unabhängiges Open-Source-Projekt zu Lern- und Vorbereitungszwecken. Es besteht keinerlei geschäftliche Verbindung, Autorisierung oder offizielle Zertifizierung durch das Bundesamt für Sicherheit in der Informationstechnik (BSI).
+* **Quellenangabe:** Alle Fragen, Antwortoptionen und Lösungsangaben stammen aus dem frei zugänglichen [Online-Kurs IT-Grundschutz des BSI](https://www.bsi.bund.de).
+* **Nutzungsbedingungen:** Die Nutzung erfolgt streng nicht-kommerziell im Einklang mit den Nutzungsbedingungen des BSI für IT-Grundschutz-Inhalte (kostenfreie Nutzung für nicht-kommerzielle Lern- und Weiterbildungszwecke).
+* **Keine Hoheitszeichen:** Dieses Projekt verwendet bewusst weder das offizielle BSI-Logo noch das Bundessiegel.
+
+---
 ## Why IT-Grundschutz?
 
 Most security frameworks tell you _what_ to achieve; IT-Grundschutz tells you _how_.

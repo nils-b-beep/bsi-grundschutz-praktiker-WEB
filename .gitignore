@@ -11,3 +11,4 @@ wheels/
 
 # Personal quiz history — scraped JSON (questions.json, urls.json) is committed
 data/results.json
+.outline_sync_state.json
