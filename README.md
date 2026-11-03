@@ -1,100 +1,37 @@
-# BSI IT-Grundschutz Praktiker — Prüfungstrainer
+# 🛡️ BSI IT-Grundschutz Praktiker – Web-Prüfungstrainer
 
-> **⚠ Experimental** — scrapes live BSI pages; question set and UI may change without notice.
+Ein leichtgewichtiger, reaktiver Web-Prüfungstrainer zur Vorbereitung auf die Zertifizierung als **BSI IT-Grundschutz-Praktiker**.
 
-Prüfungstrainer für die [BSI IT-Grundschutz Praktiker](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/Zertifizierte-Informationssicherheit/IT-Grundschutzschulung/Online-Kurs-IT-Grundschutz/online-kurs-it-grundschutz_node.html) Zertifizierung. Fragen und Antworten werden direkt vom offiziellen BSI-Online-Kurs gescrapt.
-
-![Demo](docs/demo.gif)
-
-
-## 🌐 Web-Version (Ohne Installation / GitHub Pages)
-
-Für Endanwender und Umgebungen mit restriktiven Sicherheitsrichtlinien (z. B. ASR-Regeln gegen `.exe`-Dateien) steht dieser Prüfungstrainer als reine **Web-App** zur Verfügung:
+Die Anwendung läuft vollständig im Webbrowser (Zero-Client-Footprint, keinerlei Installation erforderlich) und aktualisiert den Fragenkatalog wöchentlich über GitHub Actions direkt von den offiziellen Kursseiten des BSI.
 
 👉 **[Prüfungstrainer im Browser starten](https://nils-b-beep.github.io/bsi-grundschutz-praktiker-WEB/)**
 
-* 🛡️ Keine Installation von Python, Linux oder Executables notwendig.
-* 🔄 Wöchentlich automatische Aktualisierung der Fragen direkt von der BSI-Webseite via GitHub Actions.
-* 💾 Lokale Speicherung des Lernfortschritts im Browser (`localStorage`).
+---
 
-### ⚖️ Rechtlicher Hinweis & Disclaimer
+## 🚀 Funktionen & Highlights
 
-* **Inoffizielles Lernwerkzeug:** Dieses Projekt ist ein unabhängiges Open-Source-Projekt zu Lern- und Vorbereitungszwecken. Es besteht keinerlei geschäftliche Verbindung, Autorisierung oder offizielle Zertifizierung durch das Bundesamt für Sicherheit in der Informationstechnik (BSI).
+* **100 % Browserbasiert (Zero-Install):** Funktioniert direkt in jedem modernen Webbrowser (Edge, Chrome, Safari, Firefox) auf PC, Laptop, Tablet und Smartphone.
+* **Keine `.exe`-Dateien:** Keine Konflikte mit Microsoft Defender ASR-Regeln (*Attack Surface Reduction*), Antiviren-Heuristiken oder fehlenden lokalen Administrator-Rechten.
+* **Vollautomatische Aktualisierung:** Eine GitHub Action prüft wöchentlich montags auf neue oder geänderte Fragen im offiziellen BSI-Online-Kurs.
+* **Prüfungs- & Lernmodi:**
+  * Gezieltes Trainieren einzelner Lektionen (Lektionen 2–9).
+  * Gemischter Prüfungsmodus über alle Fragen hinweg mit Zufalls-Mischung.
+  * **Schwachstellen-Training:** Falsch beantwortete Fragen werden automatisch gemerkt und können isoliert wiederholt werden.
+* **Tastatur-Navigation:** Schnelle Bedienung für Power-User über Zifferntasten (`1`–`6`), `Enter` (Prüfen/Weiter) und Pfeiltasten.
+* **Dark Mode:** Automatische Anpassung an das Betriebssystem (`prefers-color-scheme`) mit manuellem Umschalter (☀️/🌙).
+* **Datenschutz & Offline:** Der persönliche Lernfortschritt wird ausschließlich lokal im `localStorage` des Browsers gespeichert (keine Cookies, kein Tracking, kein Benutzerkonto).
+
+---
+
+## ⚖️ Rechtlicher Hinweis & Disclaimer
+
+* **Inoffizielles Lernwerkzeug:** Dieses Projekt ist ein unabhängiges Open-Source-Lernwerkzeug zu Vorbereitungszwecken. Es besteht keinerlei offizielle Verbindung, Partnerschaft oder Zertifizierung durch das Bundesamt für Sicherheit in der Informationstechnik (BSI).
 * **Quellenangabe:** Alle Fragen, Antwortoptionen und Lösungsangaben stammen aus dem frei zugänglichen [Online-Kurs IT-Grundschutz des BSI](https://www.bsi.bund.de).
 * **Nutzungsbedingungen:** Die Nutzung erfolgt streng nicht-kommerziell im Einklang mit den Nutzungsbedingungen des BSI für IT-Grundschutz-Inhalte (kostenfreie Nutzung für nicht-kommerzielle Lern- und Weiterbildungszwecke).
 * **Keine Hoheitszeichen:** Dieses Projekt verwendet bewusst weder das offizielle BSI-Logo noch das Bundessiegel.
 
 ---
-## Why IT-Grundschutz?
 
-Most security frameworks tell you _what_ to achieve; IT-Grundschutz tells you _how_.
+## 📄 Lizenz
 
-**ISO 27001** is principle-based: Annex A lists 93 controls written at a high level of abstraction. Deciding what "A.8.8 Management of technical vulnerabilities" actually means for a specific Linux server is left entirely to you and your auditor. **NIST CSF** and **SOC 2** have the same property — they describe outcomes, not implementations.
-
-The [IT-Grundschutz-Kompendium](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium/IT_Grundschutz_Kompendium_Edition2023.pdf) takes a different approach. It ships ~100 _Bausteine_ (building blocks), each scoped to a concrete asset type — `SYS.1.1 Allgemeiner Server`, `NET.1.1 Netzarchitektur`, `OPS.1.1.3 Patch- und Änderungsmanagement`, and so on. Every Baustein lists specific, auditable requirements in three tiers:
-
-| Tier                                        | Audience                           |
-| ------------------------------------------- | ---------------------------------- |
-| **Basis-Anforderungen**                     | Every organisation, non-negotiable |
-| **Standard-Anforderungen**                  | Normal protection needs            |
-| **Anforderungen bei erhöhtem Schutzbedarf** | High-risk environments             |
-
-The result is that after a Strukturanalyse you can map every asset in your environment to a Baustein and get a concrete checklist rather than a principles document. That directness is what makes Grundschutz unusually implementable in practice.
-
-A further advantage: BSI provides an [officially recognised mapping](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/Zertifizierte-Informationssicherheit/Zertifizierung-nach-IS-Grundschutz/ISO-27001-Zertifizierung/iso-27001-zertifizierung_node.html) from Grundschutz to ISO 27001, so a Grundschutz implementation can be certified against both standards simultaneously.
-
-## Prerequisites
-
-| Tool | Install |
-|------|---------|
-| [uv](https://docs.astral.sh/uv/) | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
-| [just](https://just.systems/) | `brew install just` · `cargo install just` · [other options](https://just.systems/man/en/packages.html) |
-
-`just` is optional — every recipe is a thin wrapper around `uv run`. See the alternatives below.
-
-## Setup
-
-```bash
-just install
-# or: uv sync
-```
-
-## Usage
-
-```bash
-just scrape   # fetch questions from bsi.bund.de → data/questions.json
-just quiz     # run the quiz (default: just)
-just all      # scrape + quiz in one go
-```
-
-<details>
-<summary>Without <code>just</code></summary>
-
-```bash
-uv sync                        # install
-uv run python scraper.py       # scrape
-uv run python quiz.py          # quiz
-```
-
-</details>
-
-The scraper covers all 8 lessons that have a test (Lektion 1 has no test):
-
-| Lektion | Kategorie                          |
-| ------- | ---------------------------------- |
-| 2       | Sicherheitsmanagement              |
-| 3       | Strukturanalyse                    |
-| 4       | Schutzbedarfsfeststellung          |
-| 5       | Modellierung                       |
-| 6       | IT-Grundschutz-Check               |
-| 7       | Risikoanalyse                      |
-| 8       | Umsetzungsplanung                  |
-| 9       | Aufrechterhaltung und Verbesserung |
-
-## Quiz flow
-
-1. Pick a category (or all 48 questions at once)
-2. Optionally shuffle
-3. Read the question → select answers with **Space**, press **Enter** to submit
-4. See correct answers revealed with ✓/✗ feedback
-5. Score and weak-spot table at the end; results persist across sessions
+Dieses Projekt ist lizenziert unter der [MIT License](LICENSE) mit speziellem Hinweis auf die nicht-kommerzielle Nutzung der BSI-Inhalte.

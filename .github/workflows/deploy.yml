@@ -53,13 +53,20 @@ jobs:
             echo "Keine Änderungen an den Fragen festgestellt."
           fi
 
+      - name: Statische Webseiten-Dateien in _site vorbereiten
+        run: |
+          mkdir -p _site/data
+          cp index.html _site/
+          cp data/questions.json _site/data/
+          [ -f data/urls.json ] && cp data/urls.json _site/data/
+
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v4
 
       - name: Statische Webseiten-Artefakte hochladen
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deployment auf GitHub Pages ausführen
         id: deployment
