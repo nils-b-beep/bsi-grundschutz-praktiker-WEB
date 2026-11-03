@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BSI IT-Grundschutz Praktiker – Prüfungstrainer</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {}
+      }
+    };
+  </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans antialiased">
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200">
 
   <!-- Header -->
-  <header class="bg-slate-900 text-white shadow-lg border-b border-slate-800">
-    <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-      <div class="text-center sm:text-left">
-        <div class="flex items-center justify-center sm:justify-start gap-2">
-          <span class="text-2xl">🛡️</span>
-          <h1 class="text-xl font-bold tracking-tight text-white">IT-Grundschutz Praktiker Trainer</h1>
+  <header class="bg-slate-900 text-white shadow-lg border-b border-slate-800 sticky top-0 z-20">
+    <div class="max-w-4xl mx-auto px-4 py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="text-center sm:text-left flex items-center gap-3">
+        <span class="text-2xl">🛡️</span>
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white leading-tight">IT-Grundschutz Praktiker Trainer</h1>
+          <p class="text-xs text-slate-400">Inoffizieller & nicht-kommerzieller Prüfungstrainer</p>
         </div>
-        <p class="text-xs text-slate-400 mt-0.5">Inoffizieller & nicht-kommerzieller Web-Prüfungstrainer</p>
       </div>
-      <div class="flex items-center gap-4 bg-slate-800/80 px-4 py-2 rounded-lg border border-slate-700 text-sm">
-        <div>
-          <span class="text-xs text-slate-400 uppercase font-semibold">Fortschritt</span>
-          <div class="font-bold text-white"><span id="stat-answered">0</span> Fragen</div>
-        </div>
-        <div class="h-6 w-px bg-slate-700"></div>
-        <div>
-          <span class="text-xs text-slate-400 uppercase font-semibold">Ergebnis</span>
-          <div class="font-bold">
-            <span class="text-emerald-400" id="stat-correct">0</span> / 
-            <span class="text-rose-400" id="stat-wrong">0</span>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Statistik -->
+        <div class="flex items-center gap-3 bg-slate-800/90 px-3.5 py-1.5 rounded-lg border border-slate-700 text-xs sm:text-sm">
+          <div>
+            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Beantwortet</span>
+            <div class="font-bold text-white"><span id="stat-answered">0</span></div>
+          </div>
+          <div class="h-5 w-px bg-slate-700"></div>
+          <div>
+            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Richtig / Falsch</span>
+            <div class="font-bold">
+              <span class="text-emerald-400" id="stat-correct">0</span> / 
+              <span class="text-rose-400" id="stat-wrong">0</span>
+            </div>
           </div>
         </div>
+
+        <!-- Dark Mode Toggle Button -->
+        <button id="theme-toggle" type="button" aria-label="Farbmodus umschalten" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300 dark:text-amber-400 transition cursor-pointer">
+          <span id="theme-toggle-icon" class="text-lg">🌙</span>
+        </button>
       </div>
     </div>
   </header>
 
   <!-- Inoffizieller Hinweis Banner -->
-  <div class="bg-amber-500/10 border-b border-amber-500/20 text-amber-800 text-xs px-4 py-2 text-center font-medium">
+  <div class="bg-amber-500/10 dark:bg-amber-950/40 border-b border-amber-500/20 dark:border-amber-900/50 text-amber-800 dark:text-amber-300 text-xs px-4 py-2 text-center font-medium">
     ℹ️ Unabhängige Lernhilfe: Keine offizielle Webseite des BSI. Fragen stammen aus dem öffentlich zugänglichen BSI Online-Kurs.
   </div>
 
@@ -45,37 +62,37 @@
   <main class="max-w-4xl mx-auto flex-grow p-4 sm:p-6 w-full flex flex-col gap-6">
 
     <!-- Filter & Modus-Auswahl -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 sm:p-5 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
       <div class="flex-grow">
-        <label for="lesson-select" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Lektion wählen:</label>
-        <select id="lesson-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg py-2.5 px-3 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <label for="lesson-select" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Lektion wählen:</label>
+        <select id="lesson-select" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg py-2.5 px-3 text-slate-800 dark:text-slate-100 font-medium text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
           <option value="">Lade Fragenkatalog...</option>
         </select>
       </div>
       <div class="flex items-end gap-2">
-        <button id="btn-shuffle" title="Fragen neu mischen" class="px-3.5 py-2.5 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 text-sm font-medium transition flex items-center gap-1.5">
+        <button id="btn-shuffle" title="Fragen neu mischen" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition flex items-center gap-1.5">
           🔀 <span>Mischen</span>
         </button>
-        <button id="btn-reset" title="Statistik zurücksetzen" class="px-3.5 py-2.5 border border-slate-300 rounded-lg text-rose-600 hover:bg-rose-50 text-sm font-medium transition">
+        <button id="btn-reset" title="Statistik zurücksetzen" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-700 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-sm font-medium transition">
           Reset
         </button>
       </div>
     </div>
 
     <!-- Fragen-Karte -->
-    <div id="quiz-card" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col gap-6 hidden">
+    <div id="quiz-card" class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5 sm:p-6 flex flex-col gap-6 hidden">
       <!-- Meta-Kopfzeile -->
-      <div class="flex flex-wrap justify-between items-center gap-2 pb-4 border-b border-slate-100 text-xs text-slate-500">
+      <div class="flex flex-wrap justify-between items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
         <div class="flex items-center gap-2">
-          <span id="badge-category" class="bg-blue-50 text-blue-700 font-semibold px-2.5 py-1 rounded-md border border-blue-100">Kategorie</span>
-          <span id="badge-type" class="bg-slate-100 text-slate-600 font-medium px-2.5 py-1 rounded-md">Auswahlmodus</span>
+          <span id="badge-category" class="bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold px-2.5 py-1 rounded-md border border-blue-100 dark:border-blue-900">Kategorie</span>
+          <span id="badge-type" class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium px-2.5 py-1 rounded-md">Auswahlmodus</span>
         </div>
-        <div class="font-bold text-slate-700 text-sm" id="badge-progress">Frage 1 von 1</div>
+        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm" id="badge-progress">Frage 1 von 1</div>
       </div>
 
       <!-- Fragentext -->
       <div>
-        <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-900 leading-snug">Fragentext wird geladen...</h2>
+        <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">Fragentext wird geladen...</h2>
       </div>
 
       <!-- Antwortoptionen -->
@@ -85,15 +102,15 @@
       <div id="feedback-box" class="p-4 rounded-lg text-sm font-semibold hidden"></div>
 
       <!-- Fußleiste / Aktionen -->
-      <div class="flex flex-wrap justify-between items-center gap-3 pt-4 border-t border-slate-100">
-        <button id="btn-prev" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 text-sm font-medium transition disabled:opacity-30 disabled:pointer-events-none">
+      <div class="flex flex-wrap justify-between items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <button id="btn-prev" class="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition disabled:opacity-30 disabled:pointer-events-none">
           ← Vorherige
         </button>
         <div class="flex gap-2">
           <button id="btn-check" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg shadow-sm transition">
-            Antwort prüfen
+            Antwort prüfen <span class="hidden sm:inline text-xs opacity-75">(Enter)</span>
           </button>
-          <button id="btn-next" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-medium text-sm rounded-lg shadow-sm transition disabled:opacity-30 disabled:pointer-events-none">
+          <button id="btn-next" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-medium text-sm rounded-lg shadow-sm transition disabled:opacity-30 disabled:pointer-events-none">
             Nächste Frage →
           </button>
         </div>
@@ -101,46 +118,74 @@
     </div>
 
     <!-- Ladeanzeige & Fehler -->
-    <div id="status-card" class="bg-white rounded-xl shadow-sm border border-slate-200 p-12 text-center text-slate-500">
+    <div id="status-card" class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-12 text-center text-slate-500 dark:text-slate-400">
       <div class="animate-spin text-3xl mb-3">🔄</div>
-      <p class="font-medium text-slate-700">Lade Fragenkatalog...</p>
-      <p class="text-xs text-slate-400 mt-1">Lade Daten aus <code>data/questions.json</code></p>
+      <p class="font-medium text-slate-700 dark:text-slate-200">Lade Fragenkatalog...</p>
+      <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Lade Daten aus <code>data/questions.json</code></p>
     </div>
 
   </main>
 
   <!-- Footer & Rechtlicher Disclaimer -->
-  <footer class="bg-white border-t border-slate-200 py-6 px-4 text-xs text-slate-500">
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 px-4 text-xs text-slate-500 dark:text-slate-400 mt-auto">
     <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
       <div>
-        <p class="font-semibold text-slate-700">Rechtlicher Hinweis & Quellenangabe:</p>
+        <p class="font-semibold text-slate-700 dark:text-slate-300">Rechtlicher Hinweis & Quellenangabe:</p>
         <p class="mt-0.5 max-w-2xl leading-relaxed">
           Dies ist ein unabhängiges, nicht-kommerzielles Open-Source-Projekt zu Lern- und Vorbereitungszwecken. 
           Die Fragen und Inhalte stammen aus dem öffentlich bereitgestellten Online-Kurs des 
-          <a href="https://www.bsi.bund.de" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Bundesamtes für Sicherheit in der Informationstechnik (BSI)</a>. 
+          <a href="https://www.bsi.bund.de" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">Bundesamtes für Sicherheit in der Informationstechnik (BSI)</a>. 
           Es besteht keine Kooperation, Zertifizierung oder offizielle Verbindung zum BSI.
         </p>
       </div>
-      <div class="text-slate-400 whitespace-nowrap">
-        Version 1.0 (Web)
+      <div class="text-slate-400 dark:text-slate-500 whitespace-nowrap">
+        Version 1.1 (Dark Mode)
       </div>
     </div>
   </footer>
 
-  <!-- Anwendungslogik -->
+  <!-- Anwendungslogik & Theme Management -->
   <script>
+    // Theme Management (Light / Dark)
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleIcon = document.getElementById('theme-toggle-icon');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        themeToggleIcon.textContent = '☀️';
+        localStorage.setItem('bsi_theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        themeToggleIcon.textContent = '🌙';
+        localStorage.setItem('bsi_theme', 'light');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('bsi_theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme ? savedTheme === 'dark' : systemPrefersDark);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      applyTheme(!isDark);
+    });
+
+    // Quiz State & Logik
     let catalog = {};
     let activeQuestions = [];
     let currentIndex = 0;
     let selectedIndices = new Set();
     let isChecked = false;
     let stats = JSON.parse(localStorage.getItem('bsi_stats_v1') || '{"correct": 0, "wrong": 0, "answered": 0}');
+    let wrongQuestionIds = new Set(JSON.parse(localStorage.getItem('bsi_wrong_qids') || '[]'));
 
     function saveStats() {
       document.getElementById('stat-correct').textContent = stats.correct;
       document.getElementById('stat-wrong').textContent = stats.wrong;
       document.getElementById('stat-answered').textContent = stats.answered;
       localStorage.setItem('bsi_stats_v1', JSON.stringify(stats));
+      localStorage.setItem('bsi_wrong_qids', JSON.stringify([...wrongQuestionIds]));
     }
 
     async function start() {
@@ -150,37 +195,62 @@
         if (!res.ok) throw new Error("Status " + res.status);
         catalog = await res.json();
 
-        const select = document.getElementById('lesson-select');
-        select.innerHTML = '<option value="ALL">🎯 Alle Lektionen (Komplettes Quiz / Gemischt)</option>';
-
-        let totalQuestions = 0;
+        // Jedem Frage-Objekt eine eindeutige ID zuweisen (Kategorie + Nummer)
         Object.keys(catalog).forEach(cat => {
-          const count = catalog[cat].questions.length;
-          totalQuestions += count;
-          const opt = document.createElement('option');
-          opt.value = cat;
-          opt.textContent = `Lektion ${catalog[cat].lesson}: ${cat} (${count} Fragen)`;
-          select.appendChild(opt);
+          catalog[cat].questions.forEach(q => {
+            q.uid = `${cat}_${q.number}`;
+            q.categoryName = cat;
+          });
         });
+
+        populateDropdown();
 
         document.getElementById('status-card').classList.add('hidden');
         document.getElementById('quiz-card').classList.remove('hidden');
 
-        select.addEventListener('change', (e) => setCategory(e.target.value));
+        document.getElementById('lesson-select').addEventListener('change', (e) => setCategory(e.target.value));
         setCategory('ALL');
       } catch (err) {
         document.getElementById('status-card').innerHTML = `
           <div class="text-rose-500 font-bold text-lg mb-2">⚠️ Fehler beim Laden des Fragenkatalogs</div>
-          <p class="text-sm text-slate-600 max-w-md mx-auto">
+          <p class="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
             Die Datei <code>data/questions.json</code> konnte nicht geladen werden.
           </p>
         `;
       }
     }
 
+    function populateDropdown() {
+      const select = document.getElementById('lesson-select');
+      select.innerHTML = '<option value="ALL">🎯 Alle Lektionen (Komplettes Quiz / Gemischt)</option>';
+
+      if (wrongQuestionIds.size > 0) {
+        const optWrong = document.createElement('option');
+        optWrong.value = 'WRONG_ONLY';
+        optWrong.textContent = `❌ Schwachstellen-Training (${wrongQuestionIds.size} falsch beantwortete Fragen)`;
+        select.appendChild(optWrong);
+      }
+
+      Object.keys(catalog).forEach(cat => {
+        const count = catalog[cat].questions.length;
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = `Lektion ${catalog[cat].lesson}: ${cat} (${count} Fragen)`;
+        select.appendChild(opt);
+      });
+    }
+
     function setCategory(cat) {
       if (cat === 'ALL') {
         activeQuestions = Object.values(catalog).flatMap(item => item.questions);
+      } else if (cat === 'WRONG_ONLY') {
+        const allQuestions = Object.values(catalog).flatMap(item => item.questions);
+        activeQuestions = allQuestions.filter(q => wrongQuestionIds.has(q.uid));
+        if (activeQuestions.length === 0) {
+          alert('Keine falschen Fragen vorhanden!');
+          document.getElementById('lesson-select').value = 'ALL';
+          return setCategory('ALL');
+        }
       } else {
         activeQuestions = [...catalog[cat].questions];
       }
@@ -205,7 +275,7 @@
       const isMulti = q.correct.length > 1;
 
       document.getElementById('badge-progress').textContent = `Frage ${currentIndex + 1} von ${activeQuestions.length}`;
-      document.getElementById('badge-category').textContent = q.category || document.getElementById('lesson-select').selectedOptions[0].text.split('(')[0].trim();
+      document.getElementById('badge-category').textContent = q.categoryName || document.getElementById('lesson-select').selectedOptions[0].text.split('(')[0].trim();
       document.getElementById('badge-type').textContent = isMulti ? `Mehrfachauswahl (${q.correct.length} richtig)` : "Einfachauswahl (1 richtig)";
       document.getElementById('question-text').textContent = q.question;
 
@@ -219,9 +289,9 @@
       q.answers.forEach((ans, idx) => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = "w-full text-left p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-blue-400 bg-white transition flex items-start gap-3 cursor-pointer select-none text-sm sm:text-base leading-snug";
+        btn.className = "w-full text-left p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 transition flex items-start gap-3 cursor-pointer select-none text-sm sm:text-base leading-snug";
         btn.innerHTML = `
-          <div class="checkbox-box w-5 h-5 mt-0.5 rounded ${isMulti ? 'rounded' : 'rounded-full'} border border-slate-300 flex-shrink-0 flex items-center justify-center font-bold text-xs"></div>
+          <div class="checkbox-box w-5 h-5 mt-0.5 rounded ${isMulti ? 'rounded' : 'rounded-full'} border border-slate-300 dark:border-slate-600 flex-shrink-0 flex items-center justify-center font-bold text-xs"></div>
           <div class="flex-grow">${ans}</div>
         `;
         btn.addEventListener('click', () => handleOptionClick(idx, btn, isMulti));
@@ -239,27 +309,27 @@
       if (!isMulti) {
         selectedIndices.clear();
         document.querySelectorAll('#options-container button').forEach(b => {
-          b.classList.remove('border-blue-600', 'bg-blue-50/50', 'ring-1', 'ring-blue-600');
+          b.classList.remove('border-blue-600', 'dark:border-blue-500', 'bg-blue-50/70', 'dark:bg-blue-950/50', 'ring-1', 'ring-blue-600');
           b.querySelector('.checkbox-box').textContent = '';
-          b.querySelector('.checkbox-box').className = 'checkbox-box w-5 h-5 mt-0.5 rounded-full border border-slate-300 flex-shrink-0 flex items-center justify-center font-bold text-xs';
+          b.querySelector('.checkbox-box').className = 'checkbox-box w-5 h-5 mt-0.5 rounded-full border border-slate-300 dark:border-slate-600 flex-shrink-0 flex items-center justify-center font-bold text-xs';
         });
       }
 
       const box = btn.querySelector('.checkbox-box');
       if (selectedIndices.has(idx)) {
         selectedIndices.delete(idx);
-        btn.classList.remove('border-blue-600', 'bg-blue-50/50', 'ring-1', 'ring-blue-600');
+        btn.classList.remove('border-blue-600', 'dark:border-blue-500', 'bg-blue-50/70', 'dark:bg-blue-950/50', 'ring-1', 'ring-blue-600');
         box.textContent = '';
         box.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
       } else {
         selectedIndices.add(idx);
-        btn.classList.add('border-blue-600', 'bg-blue-50/50', 'ring-1', 'ring-blue-600');
+        btn.classList.add('border-blue-600', 'dark:border-blue-500', 'bg-blue-50/70', 'dark:bg-blue-950/50', 'ring-1', 'ring-blue-600');
         box.textContent = '✓';
         box.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
       }
     }
 
-    document.getElementById('btn-check').addEventListener('click', () => {
+    function checkAnswer() {
       if (isChecked || selectedIndices.size === 0) return;
       isChecked = true;
 
@@ -272,17 +342,17 @@
         const didSelect = selectedIndices.has(idx);
 
         if (shouldBe && didSelect) {
-          buttons[idx].classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-950');
+          buttons[idx].classList.add('bg-emerald-50', 'dark:bg-emerald-950/50', 'border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
           buttons[idx].querySelector('.checkbox-box').className = 'checkbox-box w-5 h-5 mt-0.5 rounded border border-emerald-500 bg-emerald-600 text-white flex-shrink-0 flex items-center justify-center font-bold text-xs';
           buttons[idx].querySelector('.checkbox-box').textContent = '✓';
         } else if (!shouldBe && didSelect) {
-          buttons[idx].classList.add('bg-rose-50', 'border-rose-500', 'text-rose-950');
+          buttons[idx].classList.add('bg-rose-50', 'dark:bg-rose-950/50', 'border-rose-500', 'text-rose-950', 'dark:text-rose-100');
           buttons[idx].querySelector('.checkbox-box').className = 'checkbox-box w-5 h-5 mt-0.5 rounded border border-rose-500 bg-rose-600 text-white flex-shrink-0 flex items-center justify-center font-bold text-xs';
           buttons[idx].querySelector('.checkbox-box').textContent = '✕';
           isCorrect = false;
         } else if (shouldBe && !didSelect) {
-          buttons[idx].classList.add('bg-emerald-50/40', 'border-emerald-400', 'border-dashed');
-          buttons[idx].querySelector('.checkbox-box').className = 'checkbox-box w-5 h-5 mt-0.5 rounded border border-emerald-400 text-emerald-600 flex-shrink-0 flex items-center justify-center font-bold text-xs';
+          buttons[idx].classList.add('bg-emerald-50/40', 'dark:bg-emerald-950/20', 'border-emerald-400', 'dark:border-emerald-500', 'border-dashed');
+          buttons[idx].querySelector('.checkbox-box').className = 'checkbox-box w-5 h-5 mt-0.5 rounded border border-emerald-400 text-emerald-600 dark:text-emerald-400 flex-shrink-0 flex items-center justify-center font-bold text-xs';
           buttons[idx].querySelector('.checkbox-box').textContent = '✓';
           isCorrect = false;
         }
@@ -294,17 +364,22 @@
 
       if (isCorrect && selectedIndices.size === q.correct.length) {
         stats.correct++;
-        fb.classList.add('bg-emerald-100', 'text-emerald-800', 'border', 'border-emerald-200');
-        fb.textContent = '🎉 Richtig! Gute Vorbereitung.';
+        wrongQuestionIds.delete(q.uid);
+        fb.className = "p-4 rounded-lg text-sm font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800";
+        fb.textContent = '🎉 Richtig! Exzellent vorbereitet.';
       } else {
         stats.wrong++;
-        fb.classList.add('bg-rose-100', 'text-rose-800', 'border', 'border-rose-200');
-        fb.textContent = '❌ Leider nicht ganz richtig. Überprüfe die markierten Lösungen.';
+        wrongQuestionIds.add(q.uid);
+        fb.className = "p-4 rounded-lg text-sm font-semibold bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-200 border border-rose-200 dark:border-rose-800";
+        fb.textContent = '❌ Leider nicht ganz richtig. Überprüfe die farblich markierten Lösungen.';
       }
 
       saveStats();
+      populateDropdown();
       document.getElementById('btn-check').classList.add('hidden');
-    });
+    }
+
+    document.getElementById('btn-check').addEventListener('click', checkAnswer);
 
     document.getElementById('btn-next').addEventListener('click', () => {
       if (currentIndex < activeQuestions.length - 1) {
@@ -327,9 +402,43 @@
     });
 
     document.getElementById('btn-reset').addEventListener('click', () => {
-      if (confirm('Möchtest du deine Lernstatistik wirklich zurücksetzen?')) {
+      if (confirm('Möchtest du deine gesamte Lernstatistik und Schwachstellenliste zurücksetzen?')) {
         stats = { correct: 0, wrong: 0, answered: 0 };
+        wrongQuestionIds.clear();
         saveStats();
+        populateDropdown();
+      }
+    });
+
+    // Tastaturbedienung
+    window.addEventListener('keydown', (e) => {
+      // Wenn man tippt, nicht triggern
+      if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
+
+      if (e.key === 'Enter') {
+        if (!isChecked && selectedIndices.size > 0) {
+          checkAnswer();
+        } else if (isChecked && currentIndex < activeQuestions.length - 1) {
+          currentIndex++;
+          renderCurrentQuestion();
+        }
+      } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'n') {
+        if (currentIndex < activeQuestions.length - 1) {
+          currentIndex++;
+          renderCurrentQuestion();
+        }
+      } else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'p') {
+        if (currentIndex > 0) {
+          currentIndex--;
+          renderCurrentQuestion();
+        }
+      } else if (['1', '2', '3', '4', '5', '6'].includes(e.key)) {
+        const idx = parseInt(e.key) - 1;
+        const buttons = document.querySelectorAll('#options-container button');
+        if (buttons[idx]) {
+          const q = activeQuestions[currentIndex];
+          handleOptionClick(idx, buttons[idx], q.correct.length > 1);
+        }
       }
     });
 
