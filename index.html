@@ -281,7 +281,7 @@
 
       document.getElementById('badge-progress').textContent = `Frage ${currentIndex + 1} von ${activeQuestions.length}`;
       document.getElementById('badge-category').textContent = q.categoryName || document.getElementById('lesson-select').selectedOptions[0].text.split('(')[0].trim();
-      document.getElementById('badge-type').textContent = isMulti ? `Mehrfachauswahl (${q.correct.length} richtig)` : "Einfachauswahl (1 richtig)";
+      document.getElementById('badge-type').textContent = isMulti ? "Mehrfachauswahl" : "Einzelauswahl";
       document.getElementById('question-text').textContent = q.question;
 
       const fb = document.getElementById('feedback-box');
