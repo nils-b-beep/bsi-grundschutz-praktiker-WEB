@@ -1,4 +1,9 @@
-# 🛡️ BSI IT-Grundschutz Praktiker – Web-Prüfungstrainer
+---
+title: "Übersicht"
+icon: "🛡️"
+---
+
+# BSI IT-Grundschutz Praktiker – Web-Prüfungstrainer
 
 Ein leichtgewichtiger, reaktiver Web-Prüfungstrainer zur Vorbereitung auf die Zertifizierung als **BSI IT-Grundschutz-Praktiker**.
 
