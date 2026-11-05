@@ -9,9 +9,9 @@ wheels/
 env/
 venv/
 
-# Internal / Server-specific files (not tracked in public repo)
+# Local files & caches
 AGENTS.md
-.outline_sync_state.json
+.*_state.json
 
 # Staging
 _site/
